@@ -56,9 +56,46 @@
       ===================== */
 
       var jsonToCsv = function(json) { console.log(json); };
+      //get the keys of the array, which is the header
+      var arraykey = Object.keys(healthCenters[0]);
+      //create a new empty array to store the key values
+      var array = [];
+      // store the key value into the new empty array
+      array.push(arraykey);
+      //create a new empty array to store the value of the arrays
+      var arrayvalue = [];
+      for ( i=0; i < healthCenters.length; i++){
+        var arrayvalue = Object.values(healthCenters[i]);
+        array.push(arrayvalue);
+      }
+      jsonToCsv(array)
+      //add markers
+      var myIcon = L.icon({
+        iconUrl: 'images/marker-icon.png',
+        iconSize: [30,50],
+        iconAnchor: [20,50],
+        popupAnchor: [-0,-0],
+        shadowUrl: 'images/marker-shadow.png',
+        shadowSize :[20,40],
+        shadowAnchor : [6,45],
+      })
+
+      var addMarkers = function(map){
+        for (var i=0;  i < healthCenters.length; i++){
+          if (healthCenters[i].DENTAL_PHONE === 'NA'){
+            L.marker([healthCenters[i].LAT, healthCenters[i].LNG]).addTo(map).bindPopup(healthCenters[i].NAME);
+          }else{
+            L.marker([healthCenters[i].LAT, healthCenters[i].LNG], {icon: myIcon}).addTo(map).bindPopup(healthCenters[i].NAME);
+          }
+        }
+      }
+      addMarkers(map);
 
 
-      var addMarkers = function(map) {};
+
+
+
+
 
       /* =====================
 
